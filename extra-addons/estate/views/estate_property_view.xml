@@ -69,7 +69,7 @@
                                 <field name="property_type_id"  options="{'no_create': True, 'no_create_edit':True}"/>
                             </group>
                             <group>
-                                <field name="postcode" placeholder="Postcode..."/>
+                                <field name="postcode" placeholder="Postcode...."/>
                             </group>
                             <group>
                                 <field name="date_availability"/>
