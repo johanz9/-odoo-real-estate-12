@@ -50,6 +50,7 @@
 
         <!-- PROPERTY OFFERS DEMO -->
         <record id="demo_property_offer_01" model="estate.property.offer">
+            <field name="model">estate.property</field>
             <field name="partner_id" ref="base.res_partner_12"/>
             <field name="property_id" ref="demo_property_bigvilla"/>
             <field name="price">10000</field>
