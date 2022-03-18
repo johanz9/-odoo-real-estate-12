@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.view.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Richiesta Particolare" name="richieste">
+                        <group>
+                            <field name="particular_request"/>
+                            <field name="request_description" attrs="{'invisible': [('particular_request','=',False)]}"/>
+                            <field name="test_integer" />
+                            <field name="test_float"/>
+                            <field name="total"/>
+                            <field name="test_text"/>
+                            <field name="test_date"/>
+                            <field name="test_datetime"/>
+                            <field name="test_many2one"/>
+                            <field name="status"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>
