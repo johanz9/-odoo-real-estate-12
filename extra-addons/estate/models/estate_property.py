@@ -181,9 +181,11 @@ class PropertyOffer(models.Model):
     def _compute_deadline(self):
         for record in self:
             if record.create_date:
-                record.date_deadline = record.create_date + datetime.timedelta(days=record.validity)
+                deadline = record.create_date + datetime.timedelta(days=record.validity)
+                record.date_deadline = datetime.datetime.strptime(str(deadline), "%Y-%m-%d %H:%M:%S.%f").date()
             else:
-                record.date_deadline = datetime.date.today() + datetime.timedelta(days=record.validity)
+                deadline = datetime.date.today() + datetime.timedelta(days=record.validity)
+                record.date_deadline = datetime.datetime.strptime(str(deadline), "%Y-%m-%d").date()
 
     def _inverse_deadline(self):
         for record in self:

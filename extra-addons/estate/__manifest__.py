@@ -23,7 +23,6 @@
 
         'views/res_users_views.xml',
         'views/css_loader.xml',
-        'data/estate_demo.xml'
     ],
     'demo': [
         'data/estate_demo.xml',

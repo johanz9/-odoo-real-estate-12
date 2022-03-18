@@ -11,9 +11,33 @@
         <record id="demo_industrial" model="estate.property.type">
             <field name="name">Industrial</field>
         </record>
-         <record id="demo_land" model="estate.property.type">
+        <record id="demo_land" model="estate.property.type">
             <field name="name">Land</field>
         </record>
+        <record id="demo_house" model="estate.property.type">
+            <field name="name">House</field>
+        </record>
+        <record id="demo_apartment" model="estate.property.type">
+            <field name="name">Apartment</field>
+        </record>
+
+        <!-- CREATE TAGS DEMO -->
+        <record id="demo_tag_cozy" model="estate.property.tag">
+            <field name="name">cozy</field>
+            <field name="color">1</field>
+        </record>
+        <record id="demo_tag_renovated" model="estate.property.tag">
+            <field name="name">renovated</field>
+            <field name="colo">2</field>
+        </record>
+
+        <!-- Create USER AGENT-->
+        <record id="demo_user_agent" model="res.users">
+            <field name="name">Agent User</field>
+            <field name="login">agent</field>
+            <field name="new_password">agent</field>
+        </record>
+
 
          <!-- PROPERTY DEMO -->
         <record id="demo_property_bigvilla" model="estate.property">
@@ -21,7 +45,7 @@
             <field name="state">New</field>
             <field name="description">A nice and big villa</field>
             <field name="postcode">12345</field>
-            <field name="date_availability">2020-02-02</field>
+            <field name="date_availability">2022-03-20</field>
             <field name="expected_price">1600000</field>
             <field name="selling_price">0</field>
             <field name="bedrooms">6</field>
@@ -31,13 +55,16 @@
             <field name="garden">True</field>
             <field name="garden_area">100000</field>
             <field name="garden_orientation">South</field>
+            <field name="property_type_id" ref="demo_house"/>
+            <field name="salesman_id" ref="base.user_admin"/>
+            <field name="tag_ids" eval="[(4, ref('demo_tag_cozy')),
+                                        (4, ref('demo_tag_renovated'))]"/>
         </record>
         <record id="demo_property_trailer_home" model="estate.property">
             <field name="name">Trailer home</field>
             <field name="state">Canceled</field>
             <field name="description">Home in a trailer park</field>
             <field name="postcode">54321</field>
-            <field name="date_availability">1970-01-01</field>
             <field name="expected_price">100000</field>
             <field name="selling_price">120000</field>
             <field name="bedrooms">1</field>
@@ -46,6 +73,23 @@
             <field name="garage">False</field>
             <field name="garden">False</field>
             <field name="garden_area">0</field>
+            <field name="property_type_id" ref="demo_house"/>
+            <field name="salesman_id" ref="demo_user_agent"/>
+        </record>
+        <record id="demo_property_milan_apartment" model="estate.property">
+            <field name="name">Milan Apartment</field>
+            <field name="state">New</field>
+            <field name="postcode">4000</field>
+            <field name="expected_price">10000</field>
+            <field name="bedrooms">2</field>
+            <field name="living_area">30</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">10</field>
+            <field name="property_type_id" ref="demo_apartment"/>
+            <field name="salesman_id" ref="demo_user_agent"/>
+            <field name="buyer_id" ref="base.res_partner_12"/>
         </record>
 
         <!-- PROPERTY OFFERS DEMO -->
@@ -67,13 +111,21 @@
             <field name="price">1500001</field>
             <field name="validity">14</field>
         </record>
-
+        <record id="demo_property_offer_04" model="estate.property.offer">
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="property_id" ref="demo_property_milan_apartment"/>
+            <field name="price">20000</field>
+            <field name="validity">30</field>
+        </record>
         <!-- Call action buttons -->
         <function model="estate.property.offer" name="accept_offer">
-            <value eval="[ref('estate.demo_property_offer_03')]"/>
+            <value eval="[ref('estate.demo_property_offer_03'),ref('estate.demo_property_offer_04')]"/>
         </function>
         <function model="estate.property.offer" name="refuse_offer">
             <value eval="[ref('estate.demo_property_offer_01'),ref('estate.demo_property_offer_02')]"/>
+        </function>
+        <function model="estate.property" name="sold_property">
+            <value eval="[ref('estate.demo_property_milan_apartment')]"/>
         </function>
     </data>
 </odoo>

@@ -31,8 +31,17 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Properties" decoration-success="state=='Offer Received' or state=='Offer Accepted'" decoration-muted="state=='Sold'" decoration-bf="state=='Offer Accepted'">
                 <field name="name"/>
+                <field name="salesman_id" widget="many2one_avatar_user"/>
+                <field name="postcode"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_edit_color': False}}" />
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="date_availability"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -57,7 +66,7 @@
                       <div class="row">
                         <div class="col-sm">
                             <group>
-                                <field name="property_type_id"/>
+                                <field name="property_type_id"  options="{'no_create': True, 'no_create_edit':True}"/>
                             </group>
                             <group>
                                 <field name="postcode" placeholder="Postcode..."/>
@@ -85,7 +94,7 @@
                                 <page name="property" string="Description">
                                     <group>
                                         <group string="Info">
-                                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_edit_color': False}}" />
+                                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_edit_color': False, 'no_create': True, 'no_create_edit':True}" />
                                             <field name="description" placeholder="Description..."/>
                                             <field name="bedrooms" placeholder="Bedrooms..."/>
                                             <field name="living_area" placeholder="Living Area..."/>
