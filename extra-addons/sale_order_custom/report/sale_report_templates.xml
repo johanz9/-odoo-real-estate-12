@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <t t-foreach="docs" t-as="sale.order">
+                <div t-if="docs.particular_request">
+                    <p><strong>Motivo richiesta particolare:</strong> <span t-field="docs.request_description"/></p>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

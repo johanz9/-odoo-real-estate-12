@@ -15,7 +15,8 @@
         'sale_management'
     ],
     'data': [
-        'views/sale_views.xml'
+        'views/sale_views.xml',
+        'report/sale_report_templates.xml',
     ],
     'demo': [],
     'qweb': [],
