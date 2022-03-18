@@ -3,6 +3,7 @@
     <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@id='informations']" position="after">
             <t t-foreach="docs" t-as="sale.order">
+                <!-- if particular_quest is true, it show checkbox checked -->
                 <div t-if="docs.particular_request == true">
                     <p><strong>Richiesta particolare:</strong>
                         <input type="checkbox" value="" checked="true"/>
@@ -13,8 +14,9 @@
                         <input type="checkbox" value=""/>
                     </p>
                 </div>
-                <p><strong>Motivo richiesta particolare:</strong> <span t-field="docs.request_description"/></p>
-
+                <p><strong>Motivo richiesta particolare:</strong>
+                    <span t-field="docs.request_description"/>
+                </p>
             </t>
         </xpath>
     </template>

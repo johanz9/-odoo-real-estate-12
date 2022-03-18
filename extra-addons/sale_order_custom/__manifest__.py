@@ -20,7 +20,7 @@
     ],
     'demo': [],
     'qweb': [],
-    'css': [],
+    'css': ['static/src/css/custom-css.css'],
     'application': True,
     'installable': True,
     'auto_install': False

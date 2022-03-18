@@ -28,7 +28,7 @@
         'data/estate_demo.xml',
     ],
     'qweb': [],
-    'css': ['static/src/css/crm.css'],
+    'css': ['static/src/css/custom-css.css'],
     'application': True,
     'installable': True,
     'auto_install': False
