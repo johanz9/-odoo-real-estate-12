@@ -50,7 +50,6 @@
 
         <!-- PROPERTY OFFERS DEMO -->
         <record id="demo_property_offer_01" model="estate.property.offer">
-            <field name="model">estate.property</field>
             <field name="partner_id" ref="base.res_partner_12"/>
             <field name="property_id" ref="demo_property_bigvilla"/>
             <field name="price">10000</field>
@@ -58,7 +57,7 @@
         </record>
         <record id="demo_property_offer_02" model="estate.property.offer">
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="property_id" ref="estate.demo_property_bigvilla"/>
+            <field name="property_id" ref="demo_property_bigvilla"/>
             <field name="price">1500000</field>
             <field name="validity">14</field>
         </record>

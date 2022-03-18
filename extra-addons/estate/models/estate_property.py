@@ -221,7 +221,7 @@ class PropertyOffer(models.Model):
         property = self.env['estate.property'].browse(vals['property_id'])
         if property.state == "Sold":
             raise exceptions.UserError('Cannot add offer to sold property')
-
+        print(property)
         property.state = "Offer Received"
-        self.property_id = property
+        #self.property_id = property
         return super().create(vals)
