@@ -91,6 +91,21 @@
             <field name="salesman_id" ref="demo_user_agent"/>
             <field name="buyer_id" ref="base.res_partner_12"/>
         </record>
+        <record id="demo_property_mantova_house" model="estate.property">
+            <field name="name">Mantova House</field>
+            <field name="state">New</field>
+            <field name="postcode">46100</field>
+            <field name="expected_price">40000</field>
+            <field name="bedrooms">3</field>
+            <field name="living_area">40</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">10</field>
+            <field name="property_type_id" ref="demo_apartment"/>
+            <field name="salesman_id" ref="base.user_admin"/>
+            <field name="buyer_id" ref="base.res_partner_12"/>
+        </record>
 
         <!-- PROPERTY OFFERS DEMO -->
         <record id="demo_property_offer_01" model="estate.property.offer">

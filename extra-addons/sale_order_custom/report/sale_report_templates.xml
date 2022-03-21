@@ -15,6 +15,9 @@
                         <input type="checkbox" value=""/>
                     </p>
                 </div>
+                <p><strong>Motivo Richiesta particolare:</strong>
+                       <span t-field="docs.request_description"/>
+                    </p>
 
                 <p><strong>Test integer:</strong>
                     <span t-field="docs.test_integer"/>
