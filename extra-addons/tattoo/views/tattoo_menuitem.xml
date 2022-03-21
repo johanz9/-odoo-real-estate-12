@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem id="tattoo_menu_root"
+                name="Tattoo"
+                sequence="1"/>
+
+    <!-- Session menu item -->
+    <menuitem id="tattoo_session_menu"
+              name="Sessioni"
+              parent="tattoo_menu_root"
+              sequence="10"/>
+
+    <menuitem id="tattoo_session_menu_menu_action"
+              name="Sessioni"
+              parent="tattoo_session_menu"
+              action="tattoo_session_action"
+              sequence="10"/>
+
+    <!-- Appointment -->
+    <menuitem id="tattoo_appointment_menu_menu_action"
+              name="Appuntamenti"
+              parent="tattoo_session_menu"
+              action="tattoo_appointment_action"
+              sequence="10"/>
+
+
+</odoo>
