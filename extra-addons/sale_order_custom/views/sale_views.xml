@@ -50,12 +50,36 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_sale_order_pivot"/>
             <field name="arch" type="xml">
+                <!-- replace date_order from the original view -->
+                <xpath expr="//field[@name='date_order']" position="replace">
+                    <field name="test_many2one" type="row"/>
+                </xpath>
                 <xpath expr="//field[@name='amount_total']" position="after">
-                    <field name="test_many2one" type="col"/>
+                    <field name="date_order" type="col"/>
                     <field name="status" type="col"/>
+                    <field name="test_float" type="measure"/>
                 </xpath>
             </field>
         </record>
-
+        <!-- KANBAN -->
+        <record model="ir.ui.view" id="vview_sale_order_kanban_inherit">
+            <field name="name">sale.order.kanban.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_kanban_record_top')]" position="after">
+                    <p style="margin:0px;padding:0px">
+                        Test Status: <field name="status"/>
+                    </p>
+                    <p style="margin:0px;padding:0px">
+                        Test Date: <field name="test_date"/>
+                    </p>
+                </xpath>
+                <!-- Added attributes to kanban view-->
+                <kanban position="attributes">
+                    <attribute name="default_group_by">status</attribute>
+                </kanban>
+            </field>
+        </record>
     </data>
 </odoo>
