@@ -62,7 +62,7 @@
             </field>
         </record>
         <!-- KANBAN -->
-        <record model="ir.ui.view" id="vview_sale_order_kanban_inherit">
+        <record model="ir.ui.view" id="view_sale_order_kanban_inherit">
             <field name="name">sale.order.kanban.inherit</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
@@ -79,6 +79,17 @@
                 <kanban position="attributes">
                     <attribute name="default_group_by">status</attribute>
                 </kanban>
+            </field>
+        </record>
+        <!-- GRAPH -->
+        <record model="ir.ui.view" id="view_sale_order_graph_inherit">
+            <field name="name">sale.order.graph.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_graph"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="status" type="col"/>
+                </xpath>
             </field>
         </record>
     </data>
