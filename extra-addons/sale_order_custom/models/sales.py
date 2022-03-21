@@ -21,7 +21,7 @@ class SaleOrder(models.Model):
         ('sold', 'Sold'),
         ('canceled', 'Canceled')], 'Status', default='new',
         store=True)
-    total = fields.Float(string="Total", compute="_compute_total")
+    total = fields.Float(string="Total", compute="_compute_total", store=True)
 
     # get current user as default
     test_many2one = fields.Many2one('res.users', string='User: Many2one Test', index=True,

@@ -2,6 +2,7 @@
 <odoo>
     <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">
         <xpath expr="//div[@id='informations']" position="after">
+            <h1><strong>ONLY FOR TEST</strong></h1>
             <t t-foreach="docs" t-as="sale.order">
                 <!-- if particular_quest is true, it show checkbox checked -->
                 <div t-if="docs.particular_request == true">
@@ -14,8 +15,18 @@
                         <input type="checkbox" value=""/>
                     </p>
                 </div>
-                <p><strong>Motivo richiesta particolare:</strong>
-                    <span t-field="docs.request_description"/>
+
+                <p><strong>Test integer:</strong>
+                    <span t-field="docs.test_integer"/>
+                </p>
+                <p><strong>Test float:</strong>
+                    <span t-field="docs.test_float"/>
+                </p>
+                <p><strong>Total:</strong>
+                    <span t-field="docs.total"/>
+                </p>
+                <p><strong>Test Date:</strong>
+                    <span t-field="docs.test_date"/>
                 </p>
             </t>
         </xpath>

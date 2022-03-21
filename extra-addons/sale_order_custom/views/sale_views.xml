@@ -24,5 +24,37 @@
                 </notebook>
             </field>
         </record>
+
+        <!-- SEARCH -->
+        <record id="sale_order_view_search_inherith" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_order_date']" position="after">
+                    <field name="total" filter_domain="[('total','>=',self)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="status" context="{'group_by':'status'}"/>
+                        <filter string="User" name="test_many2one" context="{'group_by':'test_many2one'}"/>
+                        <filter string="From Test Date" context="{'group_by':'test_date:month'}" name="month"/>
+                        <separator orientation="vertical" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- PIVOT -->
+        <record model="ir.ui.view" id="view_sale_order_pivot_inherit">
+            <field name="name">sale.order.pivot.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_pivot"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="status" type="col"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
