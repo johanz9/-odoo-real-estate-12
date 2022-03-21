@@ -51,6 +51,7 @@
             <field name="inherit_id" ref="sale.view_sale_order_pivot"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="test_many2one" type="col"/>
                     <field name="status" type="col"/>
                 </xpath>
             </field>
