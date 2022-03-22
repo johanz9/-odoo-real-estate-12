@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <tree string="Disegni">
                 <field name="name"/>
-                <field name="time"/>
+                <field name="time" widget="float_time"/>
                 <field name="price"/>
             </tree>
         </field>
@@ -61,6 +61,18 @@
                                     <group>
                                         <field name="name"/>
                                         <field name="price"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="clienti" string="Clienti">
+                            <field name="client_ids">
+                                <tree editable="bottom">
+                                    <field name="client_id"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="client_id"/>
                                     </group>
                                 </form>
                             </field>

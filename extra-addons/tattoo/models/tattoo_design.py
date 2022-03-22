@@ -1,6 +1,7 @@
 import datetime
 from odoo import models, fields, api
 
+
 class TattooDesign(models.Model):
     _name = 'tattoo.design'
     _description = "Tattoo Design"
@@ -13,8 +14,10 @@ class TattooDesign(models.Model):
     price = fields.Float(string="Costo tattuaggio", compute="_compute_price", readonly=True)
     image_01 = fields.Binary("Prima Immagine", help="Select image here")
     image_02 = fields.Binary("Seconda Immagine", help="Select image here")
+    client_ids = fields.One2many("tattoo.session", "design_id", string="Clienti")
 
     @api.depends('labor_price', "material_ids")
+    @api.one
     def _compute_price(self):
         for record in self:
             material_price_sum = 0
@@ -40,5 +43,3 @@ class TattooDesignMaterial(models.Model):
 
     name = fields.Char(string="Nome del Materiale", required=True)
     price = fields.Float(string="Prezzo del materiale", required=True)
-
-

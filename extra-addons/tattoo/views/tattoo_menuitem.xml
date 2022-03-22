@@ -27,14 +27,19 @@
     <!-- DESIGN -->
     <menuitem id="tattoo_design_menu_action"
               name="Disegno"
-              parent="tattoo_session_menu"
+              parent="tattoo_menu_root"
+              sequence="10"/>
+
+    <menuitem id="tattoo_design_submenu_menu_action"
+              name="Disegno"
+              parent="tattoo_design_menu_action"
               action="tattoo_design_action"
               sequence="10"/>
 
     <!-- DESIGN MATERIAL -->
     <menuitem id="tattoo_design_material_menu_action"
               name="Materiali"
-              parent="tattoo_menu_root"
+              parent="tattoo_design_menu_action"
               action="tattoo_design_material_action"
               sequence="10"/>
 

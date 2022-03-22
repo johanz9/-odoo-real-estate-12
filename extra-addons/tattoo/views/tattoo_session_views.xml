@@ -10,7 +10,6 @@
                 <field name="session_date"/>
                 <field name="design_id" widget="many2one_clickable"/>
                 <field name="duration" widget="float_time"/>
-<!--                <field name="design_id.material_ids"/>-->
                 <field name="state"/>
             </tree>
         </field>
@@ -50,9 +49,9 @@
         <field name="res_model">tattoo.session</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create a new session
-                </p>
+            <p class="o_view_nocontent_smiling_face">
+                Create a new session
+            </p>
         </field>
     </record>
 
