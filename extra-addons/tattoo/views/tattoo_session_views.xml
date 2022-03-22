@@ -9,7 +9,7 @@
                 <field name="client_id" widget="many2one_avatar_user"/>
                 <field name="session_date"/>
                 <field name="design_id" widget="many2one_clickable"/>
-                <field name="duration"/>
+                <field name="duration" widget="float_time"/>
 <!--                <field name="design_id.material_ids"/>-->
                 <field name="state"/>
             </tree>
@@ -33,6 +33,7 @@
                     <div class="col-sm">
                         <group>
                             <field name="design_id" options="{'no_create': True, 'no_create_edit':True}"/>
+
                         </group>
                         <!--<group>
                             <field name="state"/>

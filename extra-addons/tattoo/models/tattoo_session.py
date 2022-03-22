@@ -24,5 +24,8 @@ class TattooSession(models.Model):
     @api.depends('design_id')
     def _compute_duration(self):
         for record in self:
-            appointment = self.env['tattoo.appointment'].browse(record.id)
-            print(appointment)
+            try:
+                design_id = self.env['tattoo.design'].browse(record.design_id.id)
+                record.duration = design_id.time
+            except:
+                pass
