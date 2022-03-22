@@ -23,6 +23,15 @@ class TattooDesign(models.Model):
 
             record.price = record.labor_price + material_price_sum
 
+    # @api.multi
+    # def name_get(self):
+    #     res = []
+    #     for record in self:
+    #         display_name = []
+    #         res.append((record.id,
+    #                     record.name + '; Tempo esecuzione: ' + str(record.time) + '; Prezzo: ' + str(record.price)))
+    #     return res
+
 
 class TattooDesignMaterial(models.Model):
     _name = 'tattoo.design.material'
