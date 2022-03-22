@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tattoo_design_view_tree" model="ir.ui.view">
+        <field name="name">tattoo.design.tree</field>
+        <field name="model">tattoo.design</field>
+        <field name="arch" type="xml">
+            <tree string="Disegni">
+                <field name="name"/>
+                <field name="time"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="tattoo_design_form_view" model="ir.ui.view">
+        <field name="name">tattoo.design.form</field>
+        <field name="model">tattoo.design</field>
+        <field name="arch" type="xml">
+            <form string="Disegno">
+                <sheet>
+                    <div class="col-sm">
+                        <h1 class="text-primary">
+                            <field name="name" placeholder="Inserisci il nome del design..."/>
+                        </h1>
+                        <group>
+                            <field name="time" widget="float_time"/>
+                            <field name="labor_price"/>
+                            <field name="price"/>
+                        </group>
+                    </div>
+                    <notebook>
+                        <page name="immagini" string="Immagini">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p class="center-text">
+                                            <strong>Prima Immagine</strong>
+                                        </p>
+                                        <div class="resize_img center">
+                                            <field name="image_01" widget='image'/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p class="center-text">
+                                            <strong>Seconda Immagine</strong>
+                                        </p>
+                                        <div class="resize_img center">
+                                            <field name="image_02" widget='image'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+                        <page name="materiali" string="Materiali">
+                            <field name="material_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="price"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="price"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tattoo_design_action" model="ir.actions.act_window">
+        <field name="name">Design</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tattoo.design</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new design
+            </p>
+        </field>
+    </record>
+    <record id="tattoo_design_material_action" model="ir.actions.act_window">
+        <field name="name">Material</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tattoo.design.material</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Material
+            </p>
+        </field>
+    </record>
+
+</odoo>

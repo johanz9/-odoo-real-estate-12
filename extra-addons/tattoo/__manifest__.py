@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Tattoo",
-    'summary': "",
+    'summary': "Management of a Tattoo Store",
     'description': "",
     'sequence': 1,
     'author': "My Company",
@@ -22,7 +22,9 @@
         'security/ir.model.access.csv',
         'views/tattoo_session_views.xml',
         'views/tattoo_appointment_views.xml',
+        'views/tattoo_design_views.xml',
         'views/tattoo_menuitem.xml',
+        'views/css_loader.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

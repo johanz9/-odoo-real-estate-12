@@ -6,7 +6,7 @@
         <field name="model">tattoo.session</field>
         <field name="arch" type="xml">
             <tree string="Sessioni">
-<!--                <field name="client_id" widget="many2one_avatar_user"/>-->
+                <field name="client_id" widget="many2one_avatar_user"/>
                 <field name="session_date"/>
                 <field name="state"/>
             </tree>
@@ -23,7 +23,7 @@
                 <sheet>
                     <div class="col-sm">
                         <group>
-                            <!--<field name="client_id" options="{'no_create': True, 'no_create_edit':True}"/>-->
+                            <field name="client_id" options="{'no_create': True, 'no_create_edit':True}"/>
                             <field name="session_date"/>
                         </group>
                         <!--<group>

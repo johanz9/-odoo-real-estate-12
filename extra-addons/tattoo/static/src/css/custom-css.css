@@ -1,0 +1,22 @@
+
+.remove_border td{
+    border-right:1px solid transparent !important;;
+}
+
+
+/* Resize images */
+.resize_img img{
+    width: 100%;
+    height: 100%;
+    display: block; /* remove extra space below image */
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.center-text {
+    text-align: center;
+}

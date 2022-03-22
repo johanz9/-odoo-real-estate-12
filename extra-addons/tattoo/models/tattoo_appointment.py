@@ -14,9 +14,9 @@ class TattooAppointment(models.Model):
         ('mancato', 'Mancato'),
         ('rispettato', 'Rispettato')], "Stato dell'appuntamento", default='fissato',
         store=True)
-    appointment_date = fields.Date(string="Data Appuntamento",
+    appointment_date = fields.Datetime(string="Data Appuntamento",
                                    required=True,
-                                   default=datetime.datetime.now().date())
+                                   default=datetime.datetime.now())
     tattoo_artist_id = client_id = fields.Many2one('res.users', string='Tatuatore',
                                                    default=lambda self: self.env.uid)
     client_id = fields.Many2one('res.partner', string='Cliente')

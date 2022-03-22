@@ -15,7 +15,7 @@ class TattooSession(models.Model):
         ('Pagata', 'Pagata')], 'Stato della sessione', default='fissata',
         store=True)
 
-    #client_id = fields.Many2one('res.partner', string='Cliente')
-    session_date = fields.Date(string="Data Sessione",
-                               required=True,
-                               default=datetime.datetime.now().date())
+    client_id = fields.Many2one('res.partner', string='Cliente')
+    session_date = fields.Datetime(string="Data Sessione",
+                                   required=True,
+                                   default=datetime.datetime.now())
