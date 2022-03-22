@@ -6,6 +6,8 @@
         <field name="model">tattoo.appointment</field>
         <field name="arch" type="xml">
             <tree string="Appointment">
+                <field name="tattoo_artist_id"/>
+                <field name="client_id"/>
                 <field name="appointment_date"/>
                 <field name="state"/>
             </tree>
@@ -18,11 +20,14 @@
             <form string="Appointment">
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="fissato,rispettato"/>
+                    <button name="cancel_appointment" type="object" string="Annullare" attrs="{'invisible': [('state','=','annullato')]}"/>
                 </header>
                 <sheet>
                     <div class="col-sm">
                         <group>
                             <field name="appointment_date"/>
+                            <field name="tattoo_artist_id"/>
+                            <field name="client_id"/>
                         </group>
                         <!--<group>
                             <field name="state"/>
