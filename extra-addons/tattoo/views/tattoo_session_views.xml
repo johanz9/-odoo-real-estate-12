@@ -9,6 +9,7 @@
                 <field name="client_id" widget="many2one_avatar_user"/>
                 <field name="session_date"/>
                 <field name="design_id" widget="many2one_clickable"/>
+                <field name="duration"/>
 <!--                <field name="design_id.material_ids"/>-->
                 <field name="state"/>
             </tree>

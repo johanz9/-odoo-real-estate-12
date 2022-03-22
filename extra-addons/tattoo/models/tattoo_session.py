@@ -19,3 +19,10 @@ class TattooSession(models.Model):
                                    required=True,
                                    default=datetime.datetime.now())
     design_id = fields.Many2one('tattoo.design', string='Disegno')
+    duration = fields.Float(string="Durata Necessaria", compute="_compute_duration")
+
+    @api.depends('design_id')
+    def _compute_duration(self):
+        for record in self:
+            appointment = self.env['tattoo.appointment'].browse(record.id)
+            print(appointment)
