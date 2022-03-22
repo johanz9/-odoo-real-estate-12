@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tattoo_artist_hours_view_tree" model="ir.ui.view">
+        <field name="name">tattoo.artist.hours.tree</field>
+        <field name="model">tattoo.artist.hours</field>
+        <field name="arch" type="xml">
+            <tree string="Orario">
+                <field name="tattoo_artist_id"/>
+                <field name="day"/>
+                <field name="start_hour_01" widget="float_time"/>
+                <field name="end_hour_01" widget="float_time"/>
+                <field name="start_hour_02" widget="float_time"/>
+                <field name="end_hour_02" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+    <record id="tattoo_artist_hours_form_view" model="ir.ui.view">
+        <field name="name">tattoo.artist.hours.form</field>
+        <field name="model">tattoo.artist.hours</field>
+        <field name="arch" type="xml">
+            <form string="Orario">
+                <sheet>
+                    <div class="col-sm">
+                        <h1 class="text-primary">
+                            <field name="tattoo_artist_id"/>
+                        </h1>
+                        <group>
+                            <field name="day"/>
+                            <field name="start_hour_01" widget="float_time"/>
+                            <field name="end_hour_01" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="start_hour_02" widget="float_time"/>
+                            <field name="end_hour_02" widget="float_time"/>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tattoo_artist_hours_action" model="ir.actions.act_window">
+        <field name="name">Artist Hours</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tattoo.artist.hours</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Hours
+            </p>
+        </field>
+    </record>
+
+</odoo>

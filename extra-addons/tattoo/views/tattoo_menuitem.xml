@@ -43,4 +43,15 @@
               action="tattoo_design_material_action"
               sequence="10"/>
 
+    <!-- SETTING -->
+    <menuitem id="tattoo_setting_menu_action"
+              name="Setting"
+              parent="tattoo_menu_root"
+              sequence="10"/>
+    <menuitem id="tattoo_artist_hours_menu_action"
+              name="Orari Lavorativi"
+              parent="tattoo_setting_menu_action"
+              action="tattoo_artist_hours_action"
+              sequence="10"/>
+
 </odoo>
