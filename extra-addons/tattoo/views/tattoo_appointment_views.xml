@@ -20,7 +20,9 @@
             <form string="Appointment">
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="fissato,rispettato"/>
-                    <button name="cancel_appointment" type="object" string="Annullare" attrs="{'invisible': [('state','=','annullato')]}"/>
+                    <button name="cancel_appointment" type="object" string="Annullato" attrs="{'invisible': [('state','!=','fissato')]}"/>
+                    <button name="missed_appointment" type="object" string="Mancato" attrs="{'invisible': [('state','!=','fissato')]}"/>
+                    <button name="respected_appointment" type="object" string="Rispettato" attrs="{'invisible': [('state','!=','fissato')]}"/>
                 </header>
                 <sheet>
                     <div class="col-sm">

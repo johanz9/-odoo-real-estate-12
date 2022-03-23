@@ -41,17 +41,20 @@
               name="Materiali"
               parent="tattoo_design_menu_action"
               action="tattoo_design_material_action"
+              groups="tattoo_group_manager"
               sequence="10"/>
 
     <!-- SETTING -->
     <menuitem id="tattoo_setting_menu_action"
               name="Setting"
               parent="tattoo_menu_root"
+              groups="tattoo_group_manager"
               sequence="10"/>
     <menuitem id="tattoo_artist_hours_menu_action"
               name="Orari Lavorativi"
               parent="tattoo_setting_menu_action"
               action="tattoo_artist_hours_action"
+              groups="tattoo_group_manager"
               sequence="10"/>
 
 </odoo>

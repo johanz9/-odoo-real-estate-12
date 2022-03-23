@@ -27,6 +27,17 @@ class TattooAppointment(models.Model):
 
         return True
 
+    # button action missed
+    def missed_appointment(self):
+        for record in self:
+            record.state = "mancato"
+        return True
+
+    def respected_appointment(self):
+        for record in self:
+            record.state = "rispettato"
+        return True
+
     @api.model
     def create(self, vals):
         # search if the client have a appointment in state "fissato" return a record

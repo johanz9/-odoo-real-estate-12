@@ -4,3 +4,4 @@ access_tattoo_appointment,tattoo.appointment,model_tattoo_appointment,base.group
 access_tattoo_design,tattoo.design,model_tattoo_design,base.group_user,1,1,1,1
 access_tattoo_design_material,tattoo.design.material,model_tattoo_design_material,base.group_user,1,1,1,1
 access_tattoo_artist_hours,tattoo.artist.hours,model_tattoo_artist_hours,base.group_user,1,1,1,1
+access_tattoo_artist_hours_denied_to_client,tattoo.artist.hours,model_tattoo_artist_hours,tattoo_group_client,0,0,0,0

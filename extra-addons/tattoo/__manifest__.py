@@ -19,6 +19,7 @@
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/tattoo_session_views.xml',
         'views/tattoo_appointment_views.xml',
