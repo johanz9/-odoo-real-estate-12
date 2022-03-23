@@ -12,7 +12,7 @@ class TattooSession(models.Model):
         ('annullata', 'Annullata'),
         ('in_corso', 'In Corso'),
         ('finita', 'Finata'),
-        ('Pagata', 'Pagata')], 'Stato della sessione', default='fissata',
+        ('pagata', 'Pagata')], 'Stato della sessione', default='fissata',
         store=True)
     client_id = fields.Many2one('res.partner', string='Cliente')
     tattoo_artist_ids = fields.Many2many('res.users', string='Tatuatore')
@@ -34,14 +34,35 @@ class TattooSession(models.Model):
             except:
                 pass
 
-    @api.depends('design_cost','tattoo_artist_ids', 'design_time')
+    @api.depends('design_cost', 'tattoo_artist_ids', 'design_time')
     def _compute_duration(self):
         for record in self:
             try:
-                #design_id = self.env['tattoo.design'].browse(record.design_id.id)
+                # design_id = self.env['tattoo.design'].browse(record.design_id.id)
                 artist_cost = 0
                 for artist in record.tattoo_artist_ids:
                     artist_cost += artist.hour_cost * record.design_time
                 record.session_cost = record.design_cost + artist_cost
             except:
                 pass
+
+    # ACTIONS BUTTONS
+    def cancel_session(self):
+        for record in self:
+            record.state = "annullata"
+        return True
+
+    def in_corso_session(self):
+        for record in self:
+            record.state = "in_corso"
+        return True
+
+    def finita_session(self):
+        for record in self:
+            record.state = "finita"
+        return True
+
+    def pagata_session(self):
+        for record in self:
+            record.state = "pagata"
+        return True

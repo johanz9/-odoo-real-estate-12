@@ -21,7 +21,11 @@
         <field name="arch" type="xml">
             <form string="Sessioni">
                 <header>
-                    <field name="state" widget="statusbar" statusbar_visible="fissata,in_corso,finita,pagata"/>
+                    <field name="state" widget="statusbar" statusbar_visible="fissata,in_corso,finita"/>
+                    <button name="cancel_session" type="object" string="Annullata"/>
+                    <button name="in_corso_session" type="object" string="In corso"/>
+                    <button name="finita_session" type="object" string="Finita"/>
+                    <button name="pagata_session" type="object" string="Pagata"/>
                 </header>
                 <sheet>
                     <div class="col-sm">
