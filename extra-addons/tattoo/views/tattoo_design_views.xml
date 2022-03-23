@@ -66,15 +66,12 @@
                             </field>
                         </page>
                         <page name="clienti" string="Clienti">
-                            <field name="client_ids">
+                            <field name="session_ids">
                                 <tree editable="bottom">
-                                    <field name="client_id"/>
+<!--                                    attrs="{'invisible': [('customer','!=',1)]}"-->
+                                    <field name="client_id" widget="many2one_clickable" />
+                                    <field name="state"/>
                                 </tree>
-                                <form>
-                                    <group>
-                                        <field name="client_id"/>
-                                    </group>
-                                </form>
                             </field>
                         </page>
                     </notebook>
