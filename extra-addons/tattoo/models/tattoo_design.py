@@ -15,6 +15,8 @@ class TattooDesign(models.Model):
     image_01 = fields.Binary("Prima Immagine", help="Select image here")
     image_02 = fields.Binary("Seconda Immagine", help="Select image here")
     session_ids = fields.One2many("tattoo.session", "design_id", string="Sessioni")
+    session_finita_ids = fields.One2many("tattoo.session", "design_id", string="Sessioni Finiti",
+                                         compute="_compute_session")
 
     @api.depends('labor_price', "material_ids")
     @api.one
@@ -26,14 +28,10 @@ class TattooDesign(models.Model):
 
             record.price = record.labor_price + material_price_sum
 
-    # @api.multi
-    # def name_get(self):
-    #     res = []
-    #     for record in self:
-    #         display_name = []
-    #         res.append((record.id,
-    #                     record.name + '; Tempo esecuzione: ' + str(record.time) + '; Prezzo: ' + str(record.price)))
-    #     return res
+    @api.depends('session_ids')
+    def _compute_session(self):
+        new_ids = self.session_ids.filtered(lambda t: t.state == 'finita')
+        self.session_finita_ids = new_ids
 
 
 class TattooDesignMaterial(models.Model):
