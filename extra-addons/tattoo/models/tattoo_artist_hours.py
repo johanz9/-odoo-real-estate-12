@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 WEEK_DAYS = [
     ('lunedi', 'Lunedi'),
@@ -14,7 +14,7 @@ WEEK_DAYS = [
 class TattooArtistHours(models.Model):
     _name = "tattoo.artist.hours"
     _description = "Tattoo Artist's Hours"
-    _order = 'id desc'
+    _order = "sequence,id"
 
     day = fields.Selection(string='Giorno di lavoro', selection=WEEK_DAYS, default="lunedi", required=True)
     start_hour_01 = fields.Float(string="Orario inizio primo turno", required=True)
@@ -25,4 +25,10 @@ class TattooArtistHours(models.Model):
                                                    default=lambda self: self.env.uid)
     sequence = fields.Integer('Sequence', default=1, help="Used to order hours. Lower is better.")
 
-
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            display_name = []
+            res.append((record.id, str(record.tattoo_artist_id.name) + ' - ' + record.day))
+        return res

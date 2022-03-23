@@ -24,6 +24,7 @@
         'views/tattoo_appointment_views.xml',
         'views/tattoo_design_views.xml',
         'views/tattoo_artist_hours_views.xml',
+        'views/res_users_views.xml',
         'views/tattoo_menuitem.xml',
         'views/css_loader.xml',
     ],

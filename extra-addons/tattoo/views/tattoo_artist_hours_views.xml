@@ -6,6 +6,7 @@
         <field name="model">tattoo.artist.hours</field>
         <field name="arch" type="xml">
             <tree string="Orario">
+                <field name="sequence" widget="handle"/>
                 <field name="tattoo_artist_id"/>
                 <field name="day"/>
                 <field name="start_hour_01" widget="float_time"/>
