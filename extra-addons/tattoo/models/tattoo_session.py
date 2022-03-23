@@ -66,3 +66,11 @@ class TattooSession(models.Model):
         for record in self:
             record.state = "pagata"
         return True
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            res.append(
+                (record.id, str(record.client_id.name) + ' - ' + str(record.design_id.name) + ' - ' + str(record.session_date)))
+        return res
