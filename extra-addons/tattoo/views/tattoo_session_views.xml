@@ -45,7 +45,7 @@
                     </div>
                     <notebook>
                         <page name="tatuatori" string="Tatuatori">
-                            <field name="tattoo_artist_ids">
+                            <field name="tattoo_artist_ids" readonly="True">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="hour_cost"/>
