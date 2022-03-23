@@ -19,7 +19,18 @@ class TattooAppointment(models.Model):
                                        default=datetime.datetime.now())
     tattoo_artist_id = client_id = fields.Many2one('res.users', string='Tatuatore',
                                                    default=lambda self: self.env.uid)
-    client_id = fields.Many2one('res.partner', string='Cliente')
+    client_id = fields.Many2one('res.partner', string='Cliente', compute="_get_client_id", store=True)
+
+    @api.depends("session_ids")
+    def _get_client_id(self):
+        for record in self:
+            if len(record.session_ids) != 0:
+                client_id = record.session_ids[0].client_id
+                for session in record.session_ids:
+                    if client_id != session.client_id:
+                        raise exceptions.UserError('Can only add a session of the same client')
+
+                record.client_id = client_id
 
     def cancel_appointment(self):
         for record in self:
@@ -40,13 +51,14 @@ class TattooAppointment(models.Model):
 
     @api.model
     def create(self, vals):
-        # search if the client have a appointment in state "fissato" return a record
-        client_appointment = self.env['tattoo.appointment'].search(
-            [('client_id', '=', vals["client_id"]), ('state', '=', 'fissato')])
 
-        if client_appointment.state == "fissato":
-            raise exceptions.UserError('Il cliente non può avere più di un '
-                                       'appuntamento fissato')
+        # search if the client have a appointment in state "fissato" return a record
+        # client_appointment = self.env['tattoo.appointment'].search(
+        #     [('client_id', '=', vals["client_id"]), ('state', '=', 'fissato')])
+        #
+        # if client_appointment.state == "fissato":
+        #     raise exceptions.UserError('Il cliente non può avere più di un '
+        #                                'appuntamento fissato')
 
         artist_appointment = self.env['tattoo.appointment'].search(
             [('tattoo_artist_id', '=', vals["tattoo_artist_id"]), ('state', '=', 'fissato')])
@@ -56,10 +68,14 @@ class TattooAppointment(models.Model):
                                        'appuntamento fissato')
 
         # add artist to session
-        for session in vals["session_ids"]:
-            for id in session[2]:
-                self.env.cr.execute(
-                    "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
-                        id, vals["tattoo_artist_id"]))
+        try:
+            for session in vals["session_ids"]:
+                for id in session[2]:
+                    self.env.cr.execute(
+                        "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                            id, vals["tattoo_artist_id"]))
+        except:
+            raise exceptions.UserError('Il cliente non può avere più di un '
+                                       'appuntamento fissato')
 
         return super().create(vals)
