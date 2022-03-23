@@ -15,8 +15,8 @@ class TattooAppointment(models.Model):
         ('rispettato', 'Rispettato')], "Stato dell'appuntamento", default='fissato',
         store=True)
     appointment_date = fields.Datetime(string="Data Appuntamento",
-                                   required=True,
-                                   default=datetime.datetime.now())
+                                       required=True,
+                                       default=datetime.datetime.now())
     tattoo_artist_id = client_id = fields.Many2one('res.users', string='Tatuatore',
                                                    default=lambda self: self.env.uid)
     client_id = fields.Many2one('res.partner', string='Cliente')
@@ -43,5 +43,12 @@ class TattooAppointment(models.Model):
         if artist_appointment.state == "fissato":
             raise exceptions.UserError('Il tatuatore non può avere più di un '
                                        'appuntamento fissato')
+
+        # add artist to session
+        for session in vals["session_ids"]:
+            for id in session[2]:
+                self.env.cr.execute(
+                    "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                        id, vals["tattoo_artist_id"]))
 
         return super().create(vals)

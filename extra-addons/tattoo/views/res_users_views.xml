@@ -10,8 +10,8 @@
                     <div class="oe_title">
                         <label for="last_name" class="oe_edit_only"/>
                         <strong><field name="last_name" /><br/></strong>
-                        <label for="hour_cost" class="oe_edit_only"/>
-                        <strong><field name="hour_cost"/> €</strong>
+                        <label for="hour_cost" class="oe_edit_only"/><br/>
+                        <strong><field name="hour_cost" widget='monetary' options="{'currency_field': %(base.europe)d}"/> €</strong>
                     </div>
                 </xpath>
                 <notebook position="inside">
