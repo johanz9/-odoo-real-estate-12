@@ -2,6 +2,29 @@ from odoo import models, fields, api, exceptions
 import datetime
 
 
+# the client only can have one fixed appointment
+def client_only_one_appointment(self, vals):
+    # add artist to session
+    try:
+        for session in vals["session_ids"]:
+            for id in session[2]:
+                self.env.cr.execute(
+                    "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                        id, vals["tattoo_artist_id"]))
+    except:
+        raise exceptions.UserError('Il cliente non può avere più di un '
+                                   'appuntamento fissato')
+
+
+def artist_only_one_appointment(self, vals):
+    artist_appointment = self.env['tattoo.appointment'].search(
+        [('tattoo_artist_id', '=', vals["tattoo_artist_id"]), ('state', '=', 'fissato')])
+
+    if artist_appointment.state == "fissato":
+        raise exceptions.UserError('Il tatuatore non può avere più di un '
+                                   'appuntamento fissato')
+
+
 class TattooAppointment(models.Model):
     _name = 'tattoo.appointment'
     _description = "Tattoo Appointment"
@@ -60,22 +83,15 @@ class TattooAppointment(models.Model):
         #     raise exceptions.UserError('Il cliente non può avere più di un '
         #                                'appuntamento fissato')
 
-        artist_appointment = self.env['tattoo.appointment'].search(
-            [('tattoo_artist_id', '=', vals["tattoo_artist_id"]), ('state', '=', 'fissato')])
+        artist_only_one_appointment(self, vals)
 
-        if artist_appointment.state == "fissato":
-            raise exceptions.UserError('Il tatuatore non può avere più di un '
-                                       'appuntamento fissato')
+        client_only_one_appointment(self, vals)
 
-        # add artist to session
-        try:
-            for session in vals["session_ids"]:
-                for id in session[2]:
-                    self.env.cr.execute(
-                        "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
-                            id, vals["tattoo_artist_id"]))
-        except:
-            raise exceptions.UserError('Il cliente non può avere più di un '
-                                       'appuntamento fissato')
 
-        return super().create(vals)
+    @api.multi
+    def write(self, vals):
+        """Override default Odoo write function and extend."""
+        artist_only_one_appointment(self, vals)
+        client_only_one_appointment(self, vals)
+
+        return super(TattooAppointment, self).write(vals)
