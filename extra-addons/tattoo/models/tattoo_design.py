@@ -31,7 +31,20 @@ class TattooDesign(models.Model):
     @api.depends('session_ids')
     def _compute_session(self):
         new_ids = self.session_ids.filtered(lambda t: t.state == 'finita')
-        self.session_finita_ids = new_ids
+        # result = self.session_ids.read_group([("state", "=", "finita")], fields=['client_id'],
+        #                                      groupby=['client_id'])
+
+        client_id_list = []
+        session_id_list = []
+        # search session_id, get the client_id and add session if the client_id is not into client_id_list
+        # in this way i can onlye get one session by client
+        for session in new_ids.ids:
+            session_id = self.env['tattoo.session'].browse(session)
+            if session_id.client_id not in client_id_list:
+                session_id_list.append(session)
+                client_id_list.append(session_id.client_id)
+
+        self.session_finita_ids = session_id_list
 
 
 class TattooDesignMaterial(models.Model):
