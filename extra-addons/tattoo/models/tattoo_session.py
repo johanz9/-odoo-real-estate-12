@@ -22,6 +22,8 @@ class TattooSession(models.Model):
     design_id = fields.Many2one('tattoo.design', string='Disegno')
     duration = fields.Float(string="Durata Necessaria", compute="_compute_duration")
     session_cost = fields.Float(string="Costo della sessione", compute="_compute_session_cost")
+    design_cost = fields.Float(related='design_id.price')
+    design_time = fields.Float(related='design_id.time')
 
     @api.depends('design_id')
     def _compute_duration(self):
@@ -32,14 +34,14 @@ class TattooSession(models.Model):
             except:
                 pass
 
-    @api.depends('design_id','tattoo_artist_ids')
+    @api.depends('design_cost','tattoo_artist_ids', 'design_time')
     def _compute_duration(self):
         for record in self:
             try:
-                design_id = self.env['tattoo.design'].browse(record.design_id.id)
+                #design_id = self.env['tattoo.design'].browse(record.design_id.id)
                 artist_cost = 0
                 for artist in record.tattoo_artist_ids:
-                    artist_cost += artist.hour_cost * design_id.time
-                record.session_cost = design_id.price + artist_cost
+                    artist_cost += artist.hour_cost * record.design_time
+                record.session_cost = record.design_cost + artist_cost
             except:
                 pass

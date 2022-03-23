@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <record id="tattoo_artist_hours_view_search" model="ir.ui.view">
+        <field name="name">tattoo.artist.hours.search</field>
+        <field name="model">tattoo.artist.hours</field>
+        <field name="arch" type="xml">
+            <search string="Orario">
+                <filter string="I miei orari" name="own_hours" domain="[('tattoo_artist_id', '=', uid)]"/>
+            </search>
+        </field>
+    </record>
     <record id="tattoo_artist_hours_view_tree" model="ir.ui.view">
         <field name="name">tattoo.artist.hours.tree</field>
         <field name="model">tattoo.artist.hours</field>
@@ -51,6 +59,7 @@
                 Create a new Hours
             </p>
         </field>
+        <field name="context">{'search_default_own_hours': uid}</field>
     </record>
 
 </odoo>
