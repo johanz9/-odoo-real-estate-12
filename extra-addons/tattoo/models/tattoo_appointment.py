@@ -59,6 +59,57 @@ def artist_only_one_appointment(self, vals):
                                    'appuntamento fissato')
 
 
+def check_artist_hours(self, vals):
+    if "appointment_date" in vals:
+        appointment_date = vals["appointment_date"]
+    else:
+        appointment_date = self.appointment_date
+
+    if "tattoo_artist_id" in vals:
+        tattoo_artist_id = vals["tattoo_artist_id"]
+    else:
+        tattoo_artist_id = self.tattoo_artist_id.id
+
+    date = datetime.datetime.strptime(appointment_date, "%Y-%m-%d %H:%M:%S")
+    day_name = WEEK_DAYS[date.weekday()]
+    artist_hour = self.env['tattoo.artist.hours'].search(
+        [('tattoo_artist_id', '=', tattoo_artist_id), ('day', '=', day_name)])
+
+    # check if the artist_hour is empty
+    if artist_hour.create_date != False:
+        start_hour_01 = str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0]
+        start_hour_01 = start_hour_01.split(":")
+        end_hour_01 = str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0]
+        end_hour_01 = end_hour_01.split(":")
+
+        start_hour_02 = str(datetime.timedelta(hours=artist_hour.start_hour_02)).rsplit(':', 1)[0]
+        start_hour_02 = start_hour_02.split(":")
+        end_hour_02 = str(datetime.timedelta(hours=artist_hour.end_hour_02)).rsplit(':', 1)[0]
+        end_hour_02 = end_hour_02.split(":")
+
+        if datetime.time(int(start_hour_01[0]), int(start_hour_01[1])) <= date.time() <= datetime.time(
+                int(end_hour_01[0]), int(end_hour_01[1])):
+            pass
+        elif artist_hour.has_second_hour:
+            if datetime.time(int(start_hour_02[0]), int(start_hour_02[1])) <= date.time() <= datetime.time(
+                    int(end_hour_02[0]), int(end_hour_02[1])):
+                pass
+            else:
+                raise exceptions.UserError(
+                    'Il tatuattore questo giorno puo lavorare solo: {} - {} e {} - {}'.format(
+                        str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0],
+                        str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0],
+                        str(datetime.timedelta(hours=artist_hour.start_hour_02)).rsplit(':', 1)[0],
+                        str(datetime.timedelta(hours=artist_hour.end_hour_02)).rsplit(':', 1)[0]))
+        else:
+            raise exceptions.UserError(
+                'Il tatuattore questo giorno puo lavorare solo: {} - {}'.format(
+                    str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0],
+                    str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0]))
+    else:
+        raise exceptions.UserError('Il tatuatore non ha orari in questa data')
+
+
 class TattooAppointment(models.Model):
     _name = 'tattoo.appointment'
     _description = "Tattoo Appointment"
@@ -124,7 +175,6 @@ class TattooAppointment(models.Model):
 
         # artist_only_one_appointment(self, vals)
 
-        # TODO check artist hours, check if the day the artist lavora
         date = datetime.datetime.strptime(vals["appointment_date"], "%Y-%m-%d %H:%M:%S")
         day_name = WEEK_DAYS[date.weekday()]
 
@@ -132,39 +182,7 @@ class TattooAppointment(models.Model):
             [('tattoo_artist_id', '=', vals["tattoo_artist_id"]), ('day', '=', day_name)])
 
         # check if the artist_hour is empty
-        if artist_hour.create_date != False:
-
-            start_hour_01 = str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0]
-            start_hour_01 = start_hour_01.split(":")
-            end_hour_01 = str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0]
-            end_hour_01 = end_hour_01.split(":")
-
-            start_hour_02 = str(datetime.timedelta(hours=artist_hour.start_hour_02)).rsplit(':', 1)[0]
-            start_hour_02 = start_hour_02.split(":")
-            end_hour_02 = str(datetime.timedelta(hours=artist_hour.end_hour_02)).rsplit(':', 1)[0]
-            end_hour_02 = end_hour_02.split(":")
-
-            if datetime.time(int(start_hour_01[0]), int(start_hour_01[1])) <= date.time() <= datetime.time(
-                    int(end_hour_01[0]), int(end_hour_01[1])):
-                pass
-            elif artist_hour.has_second_hour:
-                if datetime.time(int(start_hour_02[0]), int(start_hour_02[1])) <= date.time() <= datetime.time(
-                        int(end_hour_02[0]), int(end_hour_02[1])):
-                    pass
-                else:
-                    raise exceptions.UserError(
-                        'Il tatuattore questo giorno puo lavorare solo: {} - {} e {} - {}'.format(
-                            str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0],
-                            str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0],
-                            str(datetime.timedelta(hours=artist_hour.start_hour_02)).rsplit(':', 1)[0],
-                            str(datetime.timedelta(hours=artist_hour.end_hour_02)).rsplit(':', 1)[0]))
-            else:
-                raise exceptions.UserError(
-                    'Il tatuattore questo giorno puo lavorare solo: {} - {}'.format(
-                        str(datetime.timedelta(hours=artist_hour.start_hour_01)).rsplit(':', 1)[0],
-                        str(datetime.timedelta(hours=artist_hour.end_hour_01)).rsplit(':', 1)[0]))
-        else:
-            raise exceptions.UserError('Il tatuatore non ha orari in questa data')
+        check_artist_hours(self, vals)
 
         return super().create(vals)
 
@@ -173,7 +191,8 @@ class TattooAppointment(models.Model):
         """Override default Odoo write function and extend."""
         # artist_only_one_appointment(self, vals)
         # TODO check artist hours
+        check_artist_hours(self, vals)
 
-        client_only_one_appointment(self, vals)
+        # client_only_one_appointment(self, vals)
 
         return super(TattooAppointment, self).write(vals)
