@@ -39,6 +39,7 @@
                             <field name="start_hour_01" widget="float_time"/>
                             <field name="end_hour_01" widget="float_time"/>
                         </group>
+                        <field name="has_second_hour"/>
                         <group>
                             <field name="start_hour_02" widget="float_time"/>
                             <field name="end_hour_02" widget="float_time"/>

@@ -19,6 +19,7 @@ class TattooArtistHours(models.Model):
     day = fields.Selection(string='Giorno di lavoro', selection=WEEK_DAYS, default="lunedi", required=True)
     start_hour_01 = fields.Float(string="Orario inizio primo turno", required=True)
     end_hour_01 = fields.Float(string="Orario fine primo turno", required=True)
+    has_second_hour = fields.Boolean(string="Secondo orario?", default=True)
     start_hour_02 = fields.Float(string="Orario inizio secondo turno")
     end_hour_02 = fields.Float(string="Orario fine secondo turno")
     tattoo_artist_id = client_id = fields.Many2one('res.users', string='Tatuatore',
