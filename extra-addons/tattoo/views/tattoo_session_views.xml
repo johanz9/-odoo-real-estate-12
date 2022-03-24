@@ -48,10 +48,14 @@
                             <field name="appointment_ids" readonly="True">
                                 <tree editable="bottom">
                                     <field name="tattoo_artist_id"/>
+                                    <field name="appointment_date"/>
+                                    <field name="state"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <field name="tattoo_artist_id"/>
+                                        <field name="appointment_date"/>
+                                        <field name="state"/>
                                     </group>
                                 </form>
                             </field>
