@@ -14,10 +14,10 @@ def client_only_one_appointment(self, vals):
 
         if "client_id" in vals:
             client_id = vals["client_id"]
-            session_ids = vals["session_ids"]
+            # session_ids = vals["session_ids"]
         else:
             client_id = self.client_id.id
-            session_ids = self.session_ids
+            # session_ids = self.session_ids
 
         client_appointment = self.env['tattoo.appointment'].search(
             [('client_id', '=', client_id), ('state', '=', 'fissato')])
@@ -26,12 +26,17 @@ def client_only_one_appointment(self, vals):
             raise exceptions.UserError('Il cliente non può avere più di un '
                                        'appuntamento fissato')
         else:
-            # TODO check it
-            for session in vals["client_id"]:
-                for id in session[2]:
-                    self.env.cr.execute(
-                        "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
-                            id, artist_id))
+            for session in vals["session_ids"]:
+                if isinstance(session, list):
+                    for id in session[2]:
+                        self.env.cr.execute(
+                            "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                                id, artist_id))
+                # else:
+                #     for id in session:
+                #         self.env.cr.execute(
+                #             "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                #                 id, artist_id))
 
         # add artist to session
         # try:
@@ -70,8 +75,12 @@ def check_artist_hours(self, vals):
     else:
         tattoo_artist_id = self.tattoo_artist_id.id
 
-    date = datetime.datetime.strptime(appointment_date, "%Y-%m-%d %H:%M:%S")
-    day_name = WEEK_DAYS[date.weekday()]
+    if isinstance(appointment_date, datetime.datetime):
+        date = appointment_date
+    else:
+        date = datetime.datetime.strptime(appointment_date, "%Y-%m-%d %H:%M:%S")
+
+    day_name = WEEK_DAYS[date.weekday() + 1]
     artist_hour = self.env['tattoo.artist.hours'].search(
         [('tattoo_artist_id', '=', tattoo_artist_id), ('day', '=', day_name)])
 
@@ -184,6 +193,29 @@ class TattooAppointment(models.Model):
         # check if the artist_hour is empty
         check_artist_hours(self, vals)
 
+        # CHECK CLIENT CAN HAVE ONLY ONE APPOINTEMNT FIXED
+        appointment = super(TattooAppointment, self).create(vals)
+
+        # check if client_id is not empty
+        if appointment.client_id.create_date != False:
+            client_id = appointment.client_id.id
+            artist_id = vals["tattoo_artist_id"]
+
+            # it return a list with two id, first id -> current appointment, second id -> another appointment
+            # if it return a list of ids, then it mean that the client have another appointment fixed
+            client_appointment = self.env['tattoo.appointment'].search(
+                [('client_id', '=', client_id), ('state', '=', 'fissato')])
+
+            if len(client_appointment.ids) >= 2:
+                raise exceptions.UserError('Il cliente non può avere più di un '
+                                           'appuntamento fissato')
+            else:
+                for session in vals["session_ids"]:
+                    for id in session[2]:
+                        self.env.cr.execute(
+                            "INSERT INTO res_users_tattoo_session_rel(tattoo_session_id, res_users_id) VALUES({}, {})".format(
+                                id, artist_id))
+
         return super().create(vals)
 
     @api.multi
@@ -193,6 +225,6 @@ class TattooAppointment(models.Model):
         # TODO check artist hours
         check_artist_hours(self, vals)
 
-        # client_only_one_appointment(self, vals)
+        client_only_one_appointment(self, vals)
 
         return super(TattooAppointment, self).write(vals)
