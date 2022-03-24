@@ -15,7 +15,7 @@ class TattooSession(models.Model):
         ('pagata', 'Pagata')], 'Stato della sessione', default='fissata',
         store=True)
     client_id = fields.Many2one('res.partner', string='Cliente')
-    tattoo_artist_ids = fields.Many2many('res.users', string='Tatuatore')
+    appointment_ids = fields.Many2many('tattoo.appointment', string='Appuntamenti')
     session_date = fields.Datetime(string="Data Sessione",
                                    required=True,
                                    default=datetime.datetime.now())
@@ -25,17 +25,13 @@ class TattooSession(models.Model):
     design_cost = fields.Float(related='design_id.price')
     same_design_count = fields.Integer(string="Numero di questo tatuaggio", compute="_compute_same_design")
 
-    @api.depends('design_cost', 'tattoo_artist_ids', 'duration')
+    @api.depends('design_cost', 'appointment_ids', 'duration')
     def _compute_session_cost(self):
         for record in self:
-            try:
-                # design_id = self.env['tattoo.design'].browse(record.design_id.id)
-                artist_cost = 0
-                for artist in record.tattoo_artist_ids:
-                    artist_cost += artist.hour_cost * record.duration
-                record.session_cost = record.design_cost + artist_cost
-            except:
-                pass
+            artist_cost = 0
+            for appointment in record.appointment_ids:
+                artist_cost += appointment.tattoo_artist_id.hour_cost * record.duration
+            record.session_cost = record.design_cost + artist_cost
 
     @api.depends('design_id')
     def _compute_same_design(self):

@@ -44,16 +44,14 @@
                         </group> -->
                     </div>
                     <notebook>
-                        <page name="tatuatori" string="Tatuatori">
-                            <field name="tattoo_artist_ids" readonly="True">
+                        <page name="appuntamenti" string="Appuntamenti">
+                            <field name="appointment_ids" readonly="True">
                                 <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="hour_cost"/>
+                                    <field name="tattoo_artist_id"/>
                                 </tree>
                                 <form>
                                     <group>
-                                        <field name="name"/>
-                                        <field name="hour_cost"/>
+                                        <field name="tattoo_artist_id"/>
                                     </group>
                                 </form>
                             </field>
