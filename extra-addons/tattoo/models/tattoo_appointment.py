@@ -156,13 +156,14 @@ class TattooAppointment(models.Model):
 
         if "session_ids" in vals:
             # vals[session_id] -> [6, false, [9]], 9 -> session_id
-            session_id = self.env['tattoo.session'].browse(vals["session_ids"][0][2])
+            session_ids = self.env['tattoo.session'].browse(vals["session_ids"][0][2])
+            for session in session_ids:
 
-            client_appointment = self.env['tattoo.appointment'].search(
-                [('client_id', '=', session_id.client_id.id), ('state', '=', 'fissato')])
+                client_appointment = self.env['tattoo.appointment'].search(
+                    [('client_id', '=', session.client_id.id), ('state', '=', 'fissato')])
 
-            if client_appointment.state == "fissato":
-                raise exceptions.UserError('Il cliente non può avere più di un '
-                                           'appuntamento fissato')
+                if client_appointment.state == "fissato" and client_appointment.id != self.id:
+                    raise exceptions.UserError('Il cliente non può avere più di un '
+                                               'appuntamento fissato')
 
         return super(TattooAppointment, self).write(vals)
