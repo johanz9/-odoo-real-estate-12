@@ -81,6 +81,14 @@ class TattooSession(models.Model):
                  str(record.client_id.name) + ' - ' + str(record.design_id.name) + ' - ' + str(record.session_date)))
         return res
 
+    @api.model
+    def create(self, vals):
+
+        if self.env.user.has_group('tattoo.tattoo_group_client'):
+            vals["client_id"] = self.env.user.partner_id.id
+        return super().create(vals)
+
+    @api.multi
     def unlink(self):
         for record in self:
             if record.state not in ['fissata', 'annullata']:

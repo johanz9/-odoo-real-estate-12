@@ -7,8 +7,8 @@ access_tattoo_artist_hours,tattoo.artist.hours,model_tattoo_artist_hours,base.gr
 access_tattoo_design_client,tattoo.client.design,model_tattoo_design,tattoo_group_client,1,0,0,0
 access_tattoo_design_artist,tattoo.artist.design,model_tattoo_design,tattoo_group_artist,1,1,1,1
 access_tattoo_design_manager,tattoo.manager.design,model_tattoo_design,tattoo_group_manager,1,1,1,1
-access_tattoo_appointment_client,tattoo.appointment.client,model_tattoo_appointment,tattoo_group_client,1,1,1,0
-access_tattoo_appointment_artist,tattoo.appointment.artist,model_tattoo_appointment,tattoo_group_artist,1,1,1,0
+access_tattoo_appointment_client,tattoo.appointment.client,model_tattoo_appointment,tattoo_group_client,1,1,1,1
+access_tattoo_appointment_artist,tattoo.appointment.artist,model_tattoo_appointment,tattoo_group_artist,1,1,1,1
 access_tattoo_appointment_manager,tattoo.appointment.manager,model_tattoo_appointment,tattoo_group_manager,1,1,1,1
 access_tattoo_design_material_manager,tattoo.design.material.manager,model_tattoo_design_material,tattoo_group_manager,1,1,1,1
 access_tattoo_artist_hours_artist,tattoo.artist.hours.artist,model_tattoo_artist_hours,tattoo_group_artist,1,1,1,1
