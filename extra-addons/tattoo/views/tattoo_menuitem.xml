@@ -58,10 +58,10 @@
               sequence="10"/>
 
     <!-- CLIENT TATTOO -->
-<!--    <menuitem id="tattoo_client_design_menu_action"-->
-<!--              name="Tatuaggi"-->
-<!--              parent="tattoo_menu_root"-->
-<!--              action="tattoo_client_design_action"-->
-<!--              sequence="10"/>-->
+    <menuitem id="tattoo_client_design_menu_action"
+              name="Tatuaggi"
+              parent="tattoo_menu_root"
+              action="tattoo_client_design_action"
+              sequence="10"/>
 
 </odoo>
