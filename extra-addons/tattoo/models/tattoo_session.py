@@ -1,5 +1,5 @@
 import datetime
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 
 class TattooSession(models.Model):
@@ -80,6 +80,12 @@ class TattooSession(models.Model):
                 (record.id,
                  str(record.client_id.name) + ' - ' + str(record.design_id.name) + ' - ' + str(record.session_date)))
         return res
+
+    def unlink(self):
+        for record in self:
+            if record.state not in ['fissata', 'annullata']:
+                raise exceptions.UserError('Non si può eliminare una session in corso, finita o pagata')
+        return super(TattooSession, self).unlink()
 
 
 class MyModuleMessageWizard(models.TransientModel):
