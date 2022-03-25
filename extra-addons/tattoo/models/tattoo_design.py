@@ -1,5 +1,6 @@
 import datetime
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
+from odoo.exceptions import UserError, AccessError
 
 
 class TattooDesign(models.Model):
@@ -17,6 +18,10 @@ class TattooDesign(models.Model):
     session_ids = fields.One2many("tattoo.session", "design_id")
     session_finita_ids = fields.One2many("tattoo.session", "design_id", string="Sessioni Finiti",
                                          compute="_compute_session")
+
+    _sql_constraints = [
+        ('check_name', 'UNIQUE(name)', 'The design name must be unique'),
+    ]
 
     @api.depends('labor_price', "material_ids")
     @api.one
@@ -46,11 +51,34 @@ class TattooDesign(models.Model):
 
         self.session_finita_ids = session_id_list
 
+    @api.model
+    def create(self, values):
+
+        # Security controls
+        if self.env.user.has_group('tattoo.tattoo_group_artist') or self.env.user.has_group(
+                'tattoo.tattoo_group_manager'):
+            # check if the user is in group billing
+            try:
+                self.check_access_rights('create')
+            except AccessError:
+                raise UserError(_("You don't have the access rights needed to create a design"))
+        else:
+            raise UserError(_("You arent in one of the following groups: artist or manager"))
+
+        return super(TattooDesign, self).create(values)
+
     @api.multi
     def write(self, vals):
 
-        if self.env.user.has_group('tattoo.tattoo_group_client'):
-            raise exceptions.UserError('Non hai il permesso')
+        if self.env.user.has_group('tattoo.tattoo_group_artist') or self.env.user.has_group(
+                'tattoo.tattoo_group_manager'):
+            # check if the user is in group billing
+            try:
+                self.check_access_rights('write')
+            except AccessError:
+                raise UserError(_("You don't have the access rights needed to update a design"))
+        else:
+            raise UserError(_("You arent in one of the following groups: artist or manager"))
 
         return super(TattooDesign, self).write(vals)
 
@@ -62,3 +90,32 @@ class TattooDesignMaterial(models.Model):
 
     name = fields.Char(string="Nome del Materiale", required=True)
     price = fields.Float(string="Prezzo del materiale", required=True)
+
+    @api.model
+    def create(self, values):
+
+        # Security controls
+        if self.env.user.has_group('tattoo.tattoo_group_manager'):
+            # check if the user is in group billing
+            try:
+                self.check_access_rights('create')
+            except AccessError:
+                raise UserError(_("You don't have the access rights needed to create a design"))
+        else:
+            raise UserError(_("You arent in one of the following groups: artist or manager"))
+
+        return super(TattooDesignMaterial, self).create(values)
+
+    @api.multi
+    def write(self, vals):
+
+        if self.env.user.has_group('tattoo.tattoo_group_manager'):
+            # check if the user is in group billing
+            try:
+                self.check_access_rights('write')
+            except AccessError:
+                raise UserError(_("You don't have the access rights needed to update a design"))
+        else:
+            raise UserError(_("You arent in one of the following groups: manager"))
+
+        return super(TattooDesignMaterial, self).write(vals)
