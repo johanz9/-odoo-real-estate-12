@@ -20,6 +20,8 @@
         <field name="model">tattoo.session</field>
         <field name="arch" type="xml">
             <tree string="Tatuaggi">
+                <field name="state" invisible="1"/>
+<!--                attrs="{'invisible': [('state','!=','finita')]}"-->
                 <field name="design_id" widget="many2one_clickable"/>
             </tree>
         </field>
@@ -115,6 +117,7 @@
         <field name="res_model">tattoo.session</field>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="tattoo_client_design_view_tree"/>
+        <field name="domain">[('state','=','finita')]</field>
 <!--        <field name="act_window_id" ref="tattoo_session_action"/>-->
     </record>
 </odoo>
