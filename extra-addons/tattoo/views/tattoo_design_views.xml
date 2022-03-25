@@ -18,6 +18,8 @@
         <field name="arch" type="xml">
             <form string="Disegno">
                 <sheet>
+                    <field name="make_visible" invisible="1"/>
+
                     <div class="col-sm">
                         <h1 class="text-primary">
                             <field name="name" placeholder="Inserisci il nome del design..."/>
@@ -51,7 +53,7 @@
                                 </div>
                             </div>
                         </page>
-                        <page name="materiali" string="Materiali">
+                        <page name="materiali" string="Materiali" attrs="{'invisible':[('make_visible','=',False)]}">
                             <field name="material_ids">
                                 <tree editable="bottom">
                                     <field name="name"/>
@@ -65,7 +67,6 @@
                                 </form>
                             </field>
                         </page>
-                        <field name="make_visible" invisible="1"/>
                         <page name="clienti" string="Clienti" attrs="{'invisible':[('make_visible','=',False)]}">
                             <field name="session_finita_ids">
                                 <tree editable="bottom">
