@@ -36,6 +36,3 @@ Rules Access
 3. ``User Manager can do anything``
 
 
-# Tattoo Account Module
-For make invoice
-
