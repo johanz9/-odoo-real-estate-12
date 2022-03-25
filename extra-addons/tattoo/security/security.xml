@@ -8,7 +8,14 @@
     <record id="tattoo_group_client" model="res.groups">
         <field name="name">Client</field>
         <field name="category_id" ref="module_category_tattoo_brokerage"/>
-        <field name="comment">Il cliente può vedere solo la lista delle sessioni a lui riferito</field>
+        <field name="comment">Il cliente può vedere solo la lista delle sessioni e appuntamenti a lui riferito</field>
+    </record>
+    <record id="tattoo_group_artist" model="res.groups">
+        <field name="name">Artist</field>
+        <field name="category_id" ref="module_category_tattoo_brokerage"/>
+        <field name="comment">Il tatuattore può vedere solo la lista degli appuntamenti a lui riferiti, può vedere tutte
+            le sessioni.
+        </field>
     </record>
     <record id="tattoo_group_manager" model="res.groups">
         <field name="name">Manager</field>
@@ -20,8 +27,14 @@
         <field name="name">Client can see only own sessions</field>
         <field name="model_id" ref="model_tattoo_session"/>
         <field name="groups" eval="[(4, ref('tattoo_group_client'))]"/>
-        <field name = "perm_read" eval = "True" />
+        <field name="perm_read" eval="True"/>
         <field name="domain_force">[('client_id', '=', user.partner_id.id)]</field>
+    </record>
+    <record id="artist_see_all_session" model="ir.rule">
+        <field name="name">Artist can see all sessions</field>
+        <field name="model_id" ref="model_tattoo_session"/>
+        <field name="groups" eval="[(4, ref('tattoo_group_artist'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
     </record>
     <record id="manager_see_all_session" model="ir.rule">
         <field name="name">Manager can see all sessions</field>
@@ -30,12 +43,19 @@
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 
-    <record id="client_ony_see_own_appointment" model="ir.rule">
+    <record id="client_only_see_own_appointment" model="ir.rule">
         <field name="name">Client can see only own appointment</field>
         <field name="model_id" ref="model_tattoo_appointment"/>
         <field name="groups" eval="[(4, ref('tattoo_group_client'))]"/>
-        <field name="perm_read" eval = "True" />
+        <field name="perm_read" eval="True"/>
         <field name="domain_force">[('client_id', '=', user.partner_id.id)]</field>
+    </record>
+    <record id="artist_only_see_own_appointment" model="ir.rule">
+        <field name="name">Artist can see only own appointment</field>
+        <field name="model_id" ref="model_tattoo_appointment"/>
+        <field name="groups" eval="[(4, ref('tattoo_group_artist'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="domain_force">[('tattoo_artist_id', '=', user.id)]</field>
     </record>
     <record id="manager_see_all_appointment" model="ir.rule">
         <field name="name">Manager can see all appointment</field>
