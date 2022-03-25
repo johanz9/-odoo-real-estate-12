@@ -6,6 +6,9 @@ After installed the module, things to do:
 3. add a user to the artist's group
 4. add hours to a tattoo artist
 
+# Tattoo account
+For make: ....
+
 Access Right
 ============
 1. User Client:
