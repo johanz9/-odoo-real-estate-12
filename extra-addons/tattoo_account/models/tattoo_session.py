@@ -36,11 +36,17 @@ class Property(models.Model):
                     "name": "Administrative fees",
                     "quantity": 1,
                     "price_unit": 100
+                },
+                {
+                    "name": "Tattoo cost",
+                    "quantity": 1,
+                    "price_unit": self.session_cost
                 }
             ]
 
             # Move creation
             account_move = self.env['account.move'].sudo().create({
+                'name': 'TEST',
                 'partner_id': self.client_id.id,
                 'move_type': "out_invoice",
                 'journal_id': journal.id,

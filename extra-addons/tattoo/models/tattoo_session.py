@@ -18,7 +18,7 @@ class TattooSession(models.Model):
     appointment_ids = fields.Many2many('tattoo.appointment', string='Appuntamenti')
     design_id = fields.Many2one('tattoo.design', string='Disegno')
     duration = fields.Float(string="Durata Necessaria", related='design_id.time')
-    session_cost = fields.Float(string="Costo della sessione", compute="_compute_session_cost")
+    session_cost = fields.Float(string="Costo della sessione", compute="_compute_session_cost", store=True)
     design_cost = fields.Float(related='design_id.price')
     same_design_count = fields.Integer(string="Numero di questo tatuaggio", compute="_compute_same_design")
 

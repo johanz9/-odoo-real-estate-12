@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="tattoo_session_view_search" model="ir.ui.view">
+        <field name="name">tattoo.session.search</field>
+        <field name="model">tattoo.session</field>
+        <field name="arch" type="xml">
+            <search string="Property ">
+                <field name="client_id"/>
+                <field name="design_id"/>
+                <field name="duration" filter_domain="[('duration','>=',self)]" string="Durata da: "/>
+                <field name="session_cost" filter_domain="[('session_cost','>=',self)]" string="Costo da: "/>
+                <separator/>
+                <filter string="Available" name="state" domain="
+                    ['|',('state','=','fissata'),
+                        ('state','=','in_corso')]
+                    "/>
+                <filter string="Sessioni finiti" name="state" domain="
+                    [('state','=','finita')]
+                    "/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <!-- WIZARD MESSAGE -->
     <!--Message Wizard -->
     <record id="mymodule_message_wizard_form" model="ir.ui.view">
