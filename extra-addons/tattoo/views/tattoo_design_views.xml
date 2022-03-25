@@ -65,7 +65,8 @@
                                 </form>
                             </field>
                         </page>
-                        <page name="clienti" string="Clienti">
+                        <field name="make_visible" invisible="1"/>
+                        <page name="clienti" string="Clienti" attrs="{'invisible':[('make_visible','=',False)]}">
                             <field name="session_finita_ids">
                                 <tree editable="bottom">
                                     <field name="client_id"/>
