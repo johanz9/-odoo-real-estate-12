@@ -23,6 +23,7 @@
         <field name="comment">can configure the system</field>
     </record>
 
+    <!-- SESSION -->
     <record id="client_ony_see_own_session" model="ir.rule">
         <field name="name">Client can see only own sessions</field>
         <field name="model_id" ref="model_tattoo_session"/>
@@ -43,6 +44,7 @@
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 
+    <!-- APPOINTMENT -->
     <record id="client_only_see_own_appointment" model="ir.rule">
         <field name="name">Client can see only own appointment</field>
         <field name="model_id" ref="model_tattoo_appointment"/>
@@ -61,6 +63,18 @@
         <field name="name">Manager can see all appointment</field>
         <field name="model_id" ref="model_tattoo_appointment"/>
         <field name="groups" eval="[(4, ref('tattoo_group_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- DESIGN -->
+    <record id="client_only_can_read_design" model="ir.rule">
+        <field name="name">Client can only read design</field>
+        <field name="model_id" ref="model_tattoo_design"/>
+        <field name="groups" eval="[(4, ref('tattoo_group_client'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 

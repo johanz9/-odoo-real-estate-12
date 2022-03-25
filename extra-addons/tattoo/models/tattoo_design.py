@@ -1,5 +1,5 @@
 import datetime
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 
 class TattooDesign(models.Model):
@@ -45,6 +45,14 @@ class TattooDesign(models.Model):
                 client_id_list.append(session_id.client_id)
 
         self.session_finita_ids = session_id_list
+
+    @api.multi
+    def write(self, vals):
+
+        if self.env.user.has_group('tattoo.tattoo_group_client'):
+            raise exceptions.UserError('Non hai il permesso')
+
+        return super(TattooDesign, self).write(vals)
 
 
 class TattooDesignMaterial(models.Model):
