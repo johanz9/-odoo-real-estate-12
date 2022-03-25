@@ -81,6 +81,21 @@ class TattooAppointment(models.Model):
                                        default=lambda self: self.env.uid)
     client_id = fields.Many2one('res.partner', string='Cliente', compute="_get_client_id", store=True)
 
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            if record.client_id.name:
+                res.append(
+                    (record.id,
+                     str(record.client_id.name) + ' - ' + str(record.appointment_date)))
+            else:
+                res.append(
+                    (record.id,
+                     'No client selected' + ' - ' + str(record.appointment_date)))
+
+            return res
+
     @api.depends("session_ids")
     def _get_client_id(self):
         for record in self:
