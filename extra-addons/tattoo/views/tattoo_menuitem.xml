@@ -49,13 +49,13 @@
               name="Setting"
               parent="tattoo_menu_root"
               groups="tattoo_group_manager"
-              sequence="10"/>
+              sequence="11"/>
     <menuitem id="tattoo_artist_hours_menu_action"
               name="Orari Lavorativi"
               parent="tattoo_setting_menu_action"
               action="tattoo_artist_hours_action"
               groups="tattoo_group_manager"
-              sequence="10"/>
+              sequence="11"/>
 
     <!-- CLIENT TATTOO -->
     <menuitem id="tattoo_client_design_menu_action"
