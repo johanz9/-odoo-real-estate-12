@@ -53,11 +53,22 @@
         </field>
     </record>
 
+    <!-- CALENDAR -->
+    <record id="tattoo_appointment_calendar_view" model="ir.ui.view">
+            <field name="name">tattoo.appointment.calendar</field>
+            <field name="model">tattoo.appointment</field>
+            <field name="arch" type="xml">
+                <calendar string="Appoitnment Date" date_start="appointment_date" mode="month" color="tattoo_artist_id" quick_add="false">
+                    <field name="client_id"/>
+                </calendar>
+            </field>
+    </record>
+
     <record id="tattoo_appointment_action" model="ir.actions.act_window">
         <field name="name">Appuntamenti</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">tattoo.appointment</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form,calendar</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new appointment
