@@ -16,9 +16,6 @@ class TattooSession(models.Model):
         store=True)
     client_id = fields.Many2one('res.partner', string='Cliente')
     appointment_ids = fields.Many2many('tattoo.appointment', string='Appuntamenti')
-    session_date = fields.Datetime(string="Data Sessione",
-                                   required=True,
-                                   default=datetime.datetime.now())
     design_id = fields.Many2one('tattoo.design', string='Disegno')
     duration = fields.Float(string="Durata Necessaria", related='design_id.time')
     session_cost = fields.Float(string="Costo della sessione", compute="_compute_session_cost")
@@ -78,7 +75,7 @@ class TattooSession(models.Model):
         for record in self:
             res.append(
                 (record.id,
-                 str(record.client_id.name) + ' - ' + str(record.design_id.name) + ' - ' + str(record.session_date)))
+                 str(record.client_id.name) + ' - ' + str(record.design_id.name)))
         return res
 
     @api.model

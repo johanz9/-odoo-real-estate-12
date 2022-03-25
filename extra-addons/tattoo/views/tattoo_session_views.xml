@@ -33,7 +33,6 @@
         <field name="arch" type="xml">
             <tree string="Sessioni">
                 <field name="client_id" widget="many2one_avatar_user"/>
-                <field name="session_date"/>
                 <field name="design_id" widget="many2one_clickable"/>
                 <field name="duration" widget="float_time"/>
                 <field name="session_cost" widget='monetary' options="{'currency_field': %(base.europe)d}"/>
@@ -59,7 +58,6 @@
                             <field name="make_visible" invisible="1"/>
                             <field name="client_id" options="{'no_create': True, 'no_create_edit':True}"
                                    attrs="{'invisible':[('make_visible','=',False)]}"/>
-                            <field name="session_date"/>
                         </group>
                     </div>
                     <div class="col-sm">
