@@ -11,7 +11,7 @@ class TattooDesign(models.Model):
     name = fields.Char(string="Nome del disegno", required=True)
     time = fields.Float(string='Tempo di esecuzione (in ore)')
     material_ids = fields.Many2many('tattoo.design.material', string='Materiali')
-    labor_price = fields.Float(string="Costo Manodopera")
+    additional_cost = fields.Float(string="Costo Adizionale")
     price = fields.Float(string="Costo tattuaggio", compute="_compute_price", readonly=True)
     image_01 = fields.Binary("Prima Immagine", help="Select image here")
     image_02 = fields.Binary("Seconda Immagine", help="Select image here")
@@ -23,7 +23,7 @@ class TattooDesign(models.Model):
         ('check_name', 'UNIQUE(name)', 'The design name must be unique'),
     ]
 
-    @api.depends('labor_price', "material_ids")
+    @api.depends('additional_cost', "material_ids")
     @api.one
     def _compute_price(self):
         for record in self:
@@ -31,7 +31,7 @@ class TattooDesign(models.Model):
             for material in self.material_ids:
                 material_price_sum += material.price
 
-            record.price = record.labor_price + material_price_sum
+            record.price = record.additional_cost + material_price_sum
 
     @api.depends('session_ids')
     def _compute_session(self):

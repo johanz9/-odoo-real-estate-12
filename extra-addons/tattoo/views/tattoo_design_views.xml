@@ -26,7 +26,7 @@
                         </h1>
                         <group>
                             <field name="time" widget="float_time"/>
-                            <field name="labor_price"/>
+                            <field name="additional_cost"/>
                             <field name="price"/>
                         </group>
                     </div>
