@@ -45,7 +45,7 @@ class TattooSession(models.Model):
         res = {
             'name': self.design_id.name,
             'sequence': 10,
-            'account_id': 1,
+            'account_id': 17,
             'price_unit': self.session_cost,
             'quantity': qty,
             'discount': False,

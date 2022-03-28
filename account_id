@@ -1,0 +1,31 @@
+  account_id | name
+
+  1 | Liquidity Transfer                |
+  2 | Fixed Asset Account               |
+  3 | Current Assets                    |
+  4 | Stock Valuation Account           |
+  5 | Stock Interim Account (Received)  |
+  6 | Stock Interim Account (Delivered) |
+  8 | Tax Paid                          |
+ 10 | Non-current assets                |
+ 11 | Prepayments                       |
+  9 | Opening Income Account            |
+ 17 | Product Sales                     |
+ 18 | Foreign Exchange Gain             |
+ 25 | Capital                           |
+ 26 | Dividends                         |
+ 19 | Cost of Goods Sold                |
+ 20 | Foreign Exchange Loss             |
+ 21 | Salary Expenses                   |
+ 22 | Purchase of Equipments            |
+ 23 | Bank Fees                         |
+ 24 | Expenses                          |
+ 12 | Current Liabilities               |
+ 14 | Tax Received                      |
+ 15 | Reserve and Profit/Loss Account   |
+ 16 | Non-current Liabilities           |
+  7 | Account Receivable                |
+ 13 | Account Payable                   |
+ 27 | Cash                              |
+ 28 | Bank                              |
+ 29 | Undistributed Profits/Losses      |
