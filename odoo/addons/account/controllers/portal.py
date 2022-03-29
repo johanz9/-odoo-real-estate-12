@@ -79,7 +79,7 @@ class PortalAccount(CustomerPortal):
         })
         return request.render("account.portal_my_invoices", values)
 
-    @http.route(['/my/invoices/<int:invoice_id>'], type='http', auth="public", website=True)
+    @http.route(['/my/invoices/'], type='http', auth="public", website=True)
     def portal_my_invoice_detail(self, invoice_id, access_token=None, report_type=None, download=False, **kw):
         try:
             invoice_sudo = self._document_check_access('account.invoice', invoice_id, access_token)
