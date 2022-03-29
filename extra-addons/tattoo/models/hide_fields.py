@@ -22,7 +22,7 @@ class HideTattooSession(models.Model):
 
     make_visible = fields.Boolean(string="User", compute='get_user')
 
-    @api.depends('make_visible')
+    @api.onchange('make_visible')
     def get_user(self, ):
         user_crnt = self._uid
 
@@ -31,3 +31,4 @@ class HideTattooSession(models.Model):
             self.make_visible = True
         else:
             self.make_visible = False
+
