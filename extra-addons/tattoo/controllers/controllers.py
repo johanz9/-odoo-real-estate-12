@@ -11,7 +11,7 @@ class Tattoo(http.Controller):
     # READ All SESSIONS
     @http.route('/tattoo/sessions', type='json', auth='user', methods=['GET'])
     def get_sessions(self):
-        _logger.info("HTTP Get all sessions receive a request")
+        _logger.info("[SESSION] HTTP Get received a request")
         sessions_rec = request.env["tattoo.session"].sudo().search([])
         sessions = []
         for session in sessions_rec:
@@ -24,13 +24,13 @@ class Tattoo(http.Controller):
                 "state": session.state,
             })
         data = {"status": 200, "response": sessions, "message": "Success"}
-        _logger.info("HTTP Get all sessions request successfully")
+        _logger.info("[SESSION] HTTP Get all sessions request successfully")
         return data
 
     # READ A SESSION
     @http.route('/tattoo/sessions/<int:session_id>', type='json', auth='user', methods=['GET'])
     def get_session(self, session_id):
-        _logger.info("HTTP Get a sessions receive a request for session_id %s" % session_id)
+        _logger.info("[SESSION] HTTP Get a sessions receive a request for session_id %s" % session_id)
         session_rec = request.env["tattoo.session"].sudo().browse(session_id)
         session = {
             "id": session_rec.id,
@@ -41,13 +41,13 @@ class Tattoo(http.Controller):
             "state": session_rec.state,
         }
         data = {"status": 200, "response": session, "message": "Success"}
-        _logger.info("HTTP Get a sessions request done successfully for session_id %s" % session_id)
+        _logger.info("[SESSION] HTTP Get request done successfully for session_id %s" % session_id)
         return data
 
     # CREATE A SESSION
     @http.route('/tattoo/sessions', type='json', auth='user', methods=['POST'])
     def create_session(self, **rec):
-        _logger.info("HTTP received data: {} ".format(rec))
+        _logger.info("[SESSION] HTTP Post received data: {} ".format(rec))
         if request.jsonrequest:
             print(rec)
 
@@ -57,6 +57,6 @@ class Tattoo(http.Controller):
             }
             session_rec = request.env["tattoo.session"].sudo().create(vals)
             args = {"ID": session_rec.id, "success": True, "message": "Success"}
-            _logger.info("Session created successfully!")
+            _logger.info("[SESSION] created successfully!")
 
         return args
