@@ -70,5 +70,16 @@ class Tattoo(http.Controller):
             session_rec = request.env["tattoo.session"].sudo().browse(session_id)
             session_rec.sudo().write(rec)
             args = {"success": True, "message": "Session: {} updated Successfully".format(session_rec.id)}
-            _logger.info("[SESSION] created successfully!")
+            _logger.info("[SESSION] updated successfully!")
+        return args
+
+    # DELETE A SESSION
+    @http.route('/tattoo/sessions/<int:session_id>', type='json', auth='user', methods=['DELETE'])
+    def update_session(self, session_id, **rec):
+        _logger.info("[SESSION] HTTP DELETE received data: {} ".format(rec))
+        if request.jsonrequest:
+            session_rec = request.env["tattoo.session"].sudo().browse(session_id)
+            session_rec.sudo().unlink()
+            args = {"success": True, "message": "Session: {} deleted Successfully".format(session_rec.id)}
+            _logger.info("[SESSION] deleted successfully!")
         return args
