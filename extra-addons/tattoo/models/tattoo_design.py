@@ -14,7 +14,7 @@ class TattooDesign(models.Model):
     additional_cost = fields.Float(string="Costo Adizionale")
     price = fields.Float(string="Costo tattuaggio", compute="_compute_price", readonly=True)
     image_01 = fields.Binary("Prima Immagine", help="Select image here", attachment=True)
-    image_02 = fields.Binary("Seconda Immagine", help="Select image here")
+    image_02 = fields.Binary("Seconda Immagine", help="Select image here", attachment=True)
     session_ids = fields.One2many("tattoo.session", "design_id")
     session_finita_ids = fields.One2many("tattoo.session", "design_id", string="Sessioni Finiti",
                                          compute="_compute_session")

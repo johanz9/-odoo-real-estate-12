@@ -1,18 +1,22 @@
 import datetime
 from odoo import models, fields, api, exceptions
 
+STATE = [
+    ('fissata', 'Fissata'),
+    ('annullata', 'Annullata'),
+    ('in_corso', 'In Corso'),
+    ('finita', 'Finata'),
+    ('pagata', 'Pagata')
+]
+
 
 class TattooSession(models.Model):
     _name = 'tattoo.session'
     _description = "Tattoo Session"
     _order = 'id desc'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    state = fields.Selection([
-        ('fissata', 'Fissata'),
-        ('annullata', 'Annullata'),
-        ('in_corso', 'In Corso'),
-        ('finita', 'Finata'),
-        ('pagata', 'Pagata')], 'Stato della sessione', default='fissata',
+    state = fields.Selection(STATE, 'Stato della sessione', default='fissata',
         store=True)
     client_id = fields.Many2one('res.partner', string='Cliente')
     appointment_ids = fields.Many2many('tattoo.appointment', string='Appuntamenti')
@@ -41,16 +45,37 @@ class TattooSession(models.Model):
     def cancel_session(self):
         for record in self:
             record.state = "annullata"
+            status = ""
+            for state in STATE:
+                if state[0] == record.state:
+                    status = state[1]
+            body = "Lo stato della sezione è <strong>{}</strong> in data {}".format(status,
+                                                                                    datetime.datetime.now().date())
+            record.message_post(body=body)
         return True
 
     def in_corso_session(self):
         for record in self:
             record.state = "in_corso"
+            status = ""
+            for state in STATE:
+                if state[0] == record.state:
+                    status = state[1]
+            body = "Lo stato della sezione è <strong>{}</strong> in data {}".format(status, datetime.datetime.now().date())
+            record.message_post(body=body)
         return True
 
     def finita_session(self):
         for record in self:
             record.state = "finita"
+
+            status = ""
+            for state in STATE:
+                if state[0] == record.state:
+                    status = state[1]
+            body = "Lo stato della sezione è <strong>{}</strong> in data {}".format(status,
+                                                                                    datetime.datetime.now().date())
+            record.message_post(body=body)
 
             message_id = self.env['mymodule.message.wizard'].create(
                 {'message': 'Il cambio dello stato della sessione è stato completato con successo'})
@@ -67,6 +92,13 @@ class TattooSession(models.Model):
     def pagata_session(self):
         for record in self:
             record.state = "pagata"
+            status = ""
+            for state in STATE:
+                if state[0] == record.state:
+                    status = state[1]
+            body = "Lo stato della sezione è <strong>{}</strong> in data {}".format(status,
+                                                                                    datetime.datetime.now().date())
+            record.message_post(body=body)
         return True
 
     @api.multi

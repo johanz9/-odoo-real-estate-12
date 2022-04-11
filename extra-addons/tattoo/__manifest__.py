@@ -14,7 +14,8 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-        'base_setup'
+        'base_setup',
+        'mail'
     ],
 
     # always loaded
