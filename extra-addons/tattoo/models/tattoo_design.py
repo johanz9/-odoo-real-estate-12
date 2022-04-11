@@ -13,7 +13,7 @@ class TattooDesign(models.Model):
     material_ids = fields.Many2many('tattoo.design.material', string='Materiali')
     additional_cost = fields.Float(string="Costo Adizionale")
     price = fields.Float(string="Costo tattuaggio", compute="_compute_price", readonly=True)
-    image_01 = fields.Binary("Prima Immagine", help="Select image here")
+    image_01 = fields.Binary("Prima Immagine", help="Select image here", attachment=True)
     image_02 = fields.Binary("Seconda Immagine", help="Select image here")
     session_ids = fields.One2many("tattoo.session", "design_id")
     session_finita_ids = fields.One2many("tattoo.session", "design_id", string="Sessioni Finiti",
@@ -26,6 +26,7 @@ class TattooDesign(models.Model):
     @api.depends('additional_cost', "material_ids")
     @api.one
     def _compute_price(self):
+
         for record in self:
             material_price_sum = 0
             for material in self.material_ids:
