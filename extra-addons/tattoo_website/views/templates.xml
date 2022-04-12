@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <template id="tattoo_design" name="Tattoo Design Template" >
+            <t t-call="website.layout">
+                <h1>Tattoo Designs</h1>
+                <!-- list of design-->
+            </t>
+        </template>
+    </data>
+</odoo>
